@@ -28,6 +28,8 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         viewModel.onStart()
+        viewModel.onStart2()
+        viewModel.onStart3()
     }
 
     private fun bindViewModel(){
@@ -36,6 +38,13 @@ class MainActivity : AppCompatActivity() {
 
             Log.d(_TAG,"ver"+ it[1].release_date)
 
+        }
+        viewModel.movie.observe(this){
+            Log.d(_TAG,"movie detail: "+ it.overview)
+        }
+
+        viewModel.moviesSearch.observe(this){
+            Log.d(_TAG,"movie Searchl: "+ it[1].title )
         }
     }
 }
