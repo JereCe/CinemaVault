@@ -19,25 +19,15 @@ class MoviesDataSource {
                 .baseUrl(_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(MoviesAPI::class.java)
-
-            try {
-                val result = api.getMovies(language, page, api_key).execute()
-                if (result.isSuccessful) {
-                    val responseBody = result.body()
-                    val moviesList = responseBody?.results ?: ArrayList()
-                    Log.d(_TAG, "Resultado Exitoso")
-                    return moviesList as ArrayList<MovieDb>
-                } else {
-                    Log.e(_TAG, "Error en llamado API: " + result.message())
-                    return ArrayList()
+            val result = api.getMovies(language, page, api_key).execute()
+            if (result.isSuccessful) {
+                val responseBody = result.body()
+                Log.d(_TAG, "Resultado Exitoso")
+                return (responseBody?.results ?: ArrayList()) as ArrayList<MovieDb>
+            } else {
+                Log.e(_TAG, "Error en llamado API: " + result.message())
+                return ArrayList<MovieDb>()
                 }
-            } catch (e: Exception) {
-                Log.e(_TAG, "Error en llamado API: " + e.message)
-                return ArrayList()
-            }
         }
-
-
-
         }
     }
