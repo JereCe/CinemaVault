@@ -49,7 +49,7 @@ class MoviesDataSource {
                 }
             }else {
                 Log.e(_TAG, "Error en llamado API: " + result.message() + "getMovies")
-                throw Exception("Error en llamada API")
+                throw Exception("Error en llamado API")
             }
 
         }
