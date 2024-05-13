@@ -79,4 +79,20 @@ class MainViewModel : ViewModel() {
 
     }
 
+    fun searchMovieList(movieName : String){
+        scope.launch {
+            kotlin.runCatching {
+                moviesRepo.searchMovies(movieName,language, api_key)
+            }.onSuccess {
+                Log.d(_TAG,"Movies Search onSuccess")
+                moviesSearch.postValue(it)
+            }.onFailure {
+                Log.e(_TAG,"Movies Search error: "+ it)
+            }
+
+        }
+
+
+    }
+
 }

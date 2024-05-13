@@ -15,7 +15,7 @@ class MovieListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     fun render(movieDb : MovieDb){
 
-        Glide.with(imagenMovie.context).load("https://image.tmdb.org/t/p/w500"+movieDb.poster_path).into(imagenMovie)
+        Glide.with(imagenMovie.context).load("https://image.tmdb.org/t/p/w300"+movieDb.poster_path).into(imagenMovie)
     }
 
 
