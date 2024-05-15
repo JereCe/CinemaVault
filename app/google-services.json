@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "538699049345",
+    "project_id": "cinevault-336b0",
+    "storage_bucket": "cinevault-336b0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:538699049345:android:3b41cedaa18e4d49a3e080",
+        "android_client_info": {
+          "package_name": "com.lexosis.cinemavault"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "538699049345-g9l7nanccd6n0adii8if0tn7rmotiknr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lexosis.cinemavault",
+            "certificate_hash": "ba50294bf069ef910bd3ceb33c4d9e48fc78b0f8"
+          }
+        },
+        {
+          "client_id": "538699049345-g56748ak1c1q3v8h7kpg4gkmejk13okv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJY_5nwwKD3S4V7GMEly-oZK_Y2AK3Yn8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "538699049345-g56748ak1c1q3v8h7kpg4gkmejk13okv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
