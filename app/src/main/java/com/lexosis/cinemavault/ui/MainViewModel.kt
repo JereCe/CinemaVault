@@ -29,7 +29,6 @@ class MainViewModel : ViewModel() {
     var movie = MutableLiveData<MovieDetail>()
     var moviesSearch = MutableLiveData<ArrayList<MovieDb>>()
     var language ="es-ES"
-    var query = "avengers"
     var page = 1
     var api_key = "4bc1debd238c329f82010708dc26b250"
     var id = 792307

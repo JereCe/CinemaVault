@@ -40,7 +40,7 @@ class MoviesDataSource {
             val result = api.getMovie(id,language,api_key).execute()
             if(result.isSuccessful) {
                 Log.d(_TAG, "Resultado Exitoso getMovie")
-                result.body()?: throw Exception("No se recibieron datos del Pokemon")
+                result.body()?: throw Exception("No se recibieron datos de la pelicula")
                 val movieDetail = result.body()
                 if(movieDetail!=null) {
                     return movieDetail

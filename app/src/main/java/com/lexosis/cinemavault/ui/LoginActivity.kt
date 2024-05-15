@@ -10,7 +10,6 @@ import com.lexosis.cinemavault.R
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var loginButton: Button
-    private lateinit var googleSignInCliente: GoogleSignInClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
