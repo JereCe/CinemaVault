@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lexosis.cinemavault.R
 import androidx.lifecycle.Observer
-import androidx.lifecycle.observe
 
 
 class MainActivity : AppCompatActivity() {

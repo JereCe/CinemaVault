@@ -28,7 +28,7 @@ class SplashActivity : AppCompatActivity() {
             showGIF()
 
             Handler(Looper.getMainLooper()).postDelayed({
-                var intent = Intent(this, MainActivity::class.java)
+                var intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
             }, 4000)

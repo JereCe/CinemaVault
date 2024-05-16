@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Cinema Vault</string>
+    <string name="default_web_client_id">538699049345-g56748ak1c1q3v8h7kpg4gkmejk13okv.apps.googleusercontent.com</string>
+    <string name="btnLogin">iniciar sesión</string>
+    <string name="btnMovieMenu">Películas</string>
+    <string name="btnLogOutMenu">cerrar</string>
+    <string name="btnWatchList">watchlist</string>
 </resources>

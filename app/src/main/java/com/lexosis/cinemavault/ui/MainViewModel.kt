@@ -32,6 +32,7 @@ class MainViewModel : ViewModel() {
     var page = 1
     var api_key = "4bc1debd238c329f82010708dc26b250"
     var id = 792307
+    var query = "avengers"
 
     //Funciones
 
