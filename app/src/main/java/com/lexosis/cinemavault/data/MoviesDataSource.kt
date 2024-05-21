@@ -1,8 +1,10 @@
 package com.lexosis.cinemavault.data
 
 import android.util.Log
+import com.google.firebase.firestore.FirebaseFirestore
+
 import com.lexosis.cinemavault.model.MovieDb
-import com.lexosis.cinemavault.model.MovieDbResult
+
 import com.lexosis.cinemavault.model.MovieDetail
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -13,6 +15,8 @@ class MoviesDataSource {
         private val _BASE_URL = "https://api.themoviedb.org/3/"
         private val _TAG = "API-MOVIE"
         private val api: MoviesAPI
+        val db = FirebaseFirestore.getInstance()
+
 
         init {
             val retrofit = Retrofit.Builder()

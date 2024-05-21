@@ -32,12 +32,14 @@
 
 
         <ImageView
+            android:id="@+id/btnMovieWatchList"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginTop="190dp"
             android:layout_marginStart="10dp"
             android:src="@drawable/baseline_bookmark_24"
-            app:tint="@color/inactive">
+            app:tint="@color/inactive"
+            android:clickable="true">
 
         </ImageView>
 

@@ -27,12 +27,11 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:backgroundTint="@color/active"
+        android:background="@drawable/rounded_btn"
         android:text="@string/btnLogin"
         android:textAllCaps="true"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:textColor="@color/black"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2">
