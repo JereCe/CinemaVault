@@ -1,5 +1,6 @@
 package com.lexosis.cinemavault.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -40,6 +41,7 @@ class WatchListActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         viewModel.onStart()
+        viewModel.onStart2()
     }
 
 
@@ -47,6 +49,12 @@ class WatchListActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[WatchListViewModel::class.java]
         viewModel.movies.observe(this){
             adapterWL.update(it)
+        }
+
+        viewModel.WLMovies.observe(this){
+            for(it in it){
+                Log.d(_TAG,"Titulo: "+it.title)
+            }
         }
 
     }
@@ -58,6 +66,11 @@ class WatchListActivity : AppCompatActivity() {
         rvWatchList.adapter = adapterWL
         svWatchList = findViewById(R.id.svWatchList)
         btnMovieList = findViewById(R.id.btnMovie)
+
+        btnMovieList.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
 
 
     }

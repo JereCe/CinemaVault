@@ -3,9 +3,10 @@ package com.lexosis.cinemavault.ui
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.lexosis.cinemavault.data.FavoriteRepository
 import com.lexosis.cinemavault.data.MoviesRepository
+import com.lexosis.cinemavault.model.FavoriteMovie
 import com.lexosis.cinemavault.model.MovieDb
-import com.lexosis.cinemavault.model.MovieDbResult
 import com.lexosis.cinemavault.model.MovieDetail
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -22,6 +23,8 @@ class MainViewModel : ViewModel() {
     //Dependencias
 
     private val moviesRepo = MoviesRepository()
+
+    private val favoriteRepo = FavoriteRepository()
 
     //Propiedades
 
@@ -70,6 +73,15 @@ class MainViewModel : ViewModel() {
                 Log.e(_TAG,"Movies Search error: "+ it)
             }
         }
+
+    }
+
+    fun guardarFavorito(id: Int, title: String, releaseDate: String, posterPath: String) {
+        val favoriteMovie = FavoriteMovie(id, title, releaseDate, posterPath)
+        Log.d(_TAG,"llegue al repo")
+
+        favoriteRepo.guardarPeliculaFavorita(favoriteMovie)
+
 
     }
 

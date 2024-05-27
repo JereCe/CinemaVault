@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
     private fun bindView(){
         rvMovies = findViewById(R.id.rvMovies)
         rvMovies.layoutManager = GridLayoutManager(this,2)
-        adapterMovieList = MovieListAdapter()
+        adapterMovieList = MovieListAdapter(viewModel)
         rvMovies.adapter = adapterMovieList
         svMovielist = findViewById(R.id.svMoviesList)
         btnWatchListActivity = findViewById(R.id.btnWatchList)
