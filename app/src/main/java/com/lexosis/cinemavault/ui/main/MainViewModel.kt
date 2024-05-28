@@ -1,4 +1,4 @@
-package com.lexosis.cinemavault.ui
+package com.lexosis.cinemavault.ui.main
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -49,18 +49,6 @@ class MainViewModel : ViewModel() {
             }
         }
     }
-    fun onStart2(){
-        scope.launch {
-            kotlin.runCatching {
-                moviesRepo.getMovie(id,language,api_key)
-            }.onSuccess {
-                Log.d(_TAG,"Movie onSuccess")
-                movie.postValue(it)
-            }.onFailure {
-                Log.e(_TAG,"Movie error: "+ it)
-            }
-        }
-    }
 
     fun searchMovieList(movieName : String){
         scope.launch {
@@ -76,11 +64,9 @@ class MainViewModel : ViewModel() {
 
     }
 
-    fun guardarFavorito(id: Int, title: String, releaseDate: String, posterPath: String) {
+    fun saveFavoriteMovie(id: Int, title: String, releaseDate: String, posterPath: String) {
         val favoriteMovie = FavoriteMovie(id, title, releaseDate, posterPath)
-        Log.d(_TAG,"llegue al repo")
-
-        favoriteRepo.guardarPeliculaFavorita(favoriteMovie)
+        favoriteRepo.saveFavoriteMovie(favoriteMovie)
 
 
     }

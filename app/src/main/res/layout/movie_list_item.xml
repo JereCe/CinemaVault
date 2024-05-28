@@ -6,10 +6,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cvMainMovie"
         android:layout_width="140dp"
         android:layout_height="230dp"
         android:layout_marginStart="32dp"
         android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:focusable="true"
         app:cardCornerRadius="8dp"
         app:cardBackgroundColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"

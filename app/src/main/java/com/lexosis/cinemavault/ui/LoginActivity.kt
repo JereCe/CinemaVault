@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 
 import com.lexosis.cinemavault.R
+import com.lexosis.cinemavault.ui.main.MainActivity
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var loginButton: Button

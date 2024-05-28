@@ -1,10 +1,8 @@
-package com.lexosis.cinemavault.ui
+package com.lexosis.cinemavault.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.SearchView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -15,8 +13,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lexosis.cinemavault.R
 import androidx.lifecycle.Observer
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.lexosis.cinemavault.ui.Adapter.MovieListAdapter
+import com.lexosis.cinemavault.ui.LoginActivity
+import com.lexosis.cinemavault.ui.watchlist.WatchListActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var svMovielist : SearchView
     private lateinit var btnWatchListActivity: Button
     private lateinit var firebaseAuth: FirebaseAuth
-
+    private lateinit var btnExit : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +41,6 @@ class MainActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
         bindViewModel()
         bindView()
-        checkUser()
     }
 
     override fun onStart() {
@@ -53,9 +53,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.movies.observe(this){
             adapterMovieList.update(it)
         }
-
     }
-
     private fun bindView(){
         rvMovies = findViewById(R.id.rvMovies)
         rvMovies.layoutManager = GridLayoutManager(this,2)
@@ -63,11 +61,9 @@ class MainActivity : AppCompatActivity() {
         rvMovies.adapter = adapterMovieList
         svMovielist = findViewById(R.id.svMoviesList)
         btnWatchListActivity = findViewById(R.id.btnWatchList)
+        btnExit = findViewById(R.id.btnExit)
         setObserversAndEvents()
-
-
     }
-
     private fun setObserversAndEvents() {
         svMovielist.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -91,17 +87,21 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
-    }
-
-    private fun checkUser(){
-        val firebaseUser = firebaseAuth.currentUser
-        if (firebaseUser== null){
-            startActivity(Intent(this,LoginActivity::class.java))
-            finish()
+        btnExit.setOnClickListener{
+            exitApplication()
         }
     }
-
-
-
+    private fun exitApplication() {
+        // Cerrar sesión en Firebase Authentication
+        FirebaseAuth.getInstance().signOut()
+        // Cerrar sesión en Google Sign-In
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .build()
+        val googleSignInClient = GoogleSignIn.getClient(this, gso)
+        googleSignInClient.signOut().addOnCompleteListener {
+            // Cerrar completamente la aplicación
+            finishAffinity()
+        }
+    }
 }

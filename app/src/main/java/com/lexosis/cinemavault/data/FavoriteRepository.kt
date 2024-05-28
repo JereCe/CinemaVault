@@ -14,13 +14,8 @@ class FavoriteRepository {
     private val mAuth = FirebaseAuth.getInstance()
     private val userId = mAuth.currentUser
 
-
-
-    fun guardarPeliculaFavorita(pelicula: FavoriteMovie) {
-
+    fun saveFavoriteMovie(pelicula: FavoriteMovie) {
         if (userId != null) {
-            Log.d(_TAG,"llegue al repo")
-
            db.collection("usuarios").document(userId.email.toString())
                .collection("peliculasFavoritas").document(pelicula.id.toString())
                .set(pelicula)
@@ -29,10 +24,9 @@ class FavoriteRepository {
         } else {
             Log.d(_TAG,"null")
         }
-
     }
 
-    suspend fun recuperarPeliculasFavoritas(): ArrayList<FavoriteMovie> {
+    suspend fun getFavoriteMovies(): ArrayList<FavoriteMovie> {
         val peliculasFavoritas = ArrayList<FavoriteMovie>()
         if (userId != null) {
             try {
