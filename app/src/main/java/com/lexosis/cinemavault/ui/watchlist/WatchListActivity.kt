@@ -20,11 +20,11 @@ import com.lexosis.cinemavault.ui.main.MainActivity
 class WatchListActivity : AppCompatActivity() {
     private lateinit var viewModel: WatchListViewModel
     private lateinit var rvWatchList: RecyclerView
-    private lateinit var adapterWL : WatchListAdapter
+    private lateinit var adapterWL: WatchListAdapter
     private val _TAG = "API-MOVIE"
-    private lateinit var svWatchList : SearchView
+    private lateinit var svWatchList: SearchView
     private lateinit var btnMovieList: Button
-    private lateinit var btnExit : Button
+    private lateinit var btnExit: Button
     private lateinit var firebaseAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,17 +39,20 @@ class WatchListActivity : AppCompatActivity() {
         bindViewModel()
         bindView()
     }
+
     override fun onStart() {
         super.onStart()
         viewModel.onStart()
     }
-    private fun bindViewModel(){
+
+    private fun bindViewModel() {
         viewModel = ViewModelProvider(this)[WatchListViewModel::class.java]
-        viewModel.WLMovies.observe(this){
+        viewModel.WLMovies.observe(this) {
             adapterWL.update(it)
         }
     }
-    private fun bindView(){
+
+    private fun bindView() {
         rvWatchList = findViewById(R.id.rvWatchList)
         rvWatchList.layoutManager = LinearLayoutManager(this)
         adapterWL = WatchListAdapter()
@@ -59,15 +62,17 @@ class WatchListActivity : AppCompatActivity() {
         btnExit = findViewById(R.id.btnExit)
         setObserversAndEvents()
     }
-    private fun setObserversAndEvents(){
+
+    private fun setObserversAndEvents() {
         btnMovieList.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
-        btnExit.setOnClickListener{
+        btnExit.setOnClickListener {
             exitApplication()
         }
     }
+
     private fun exitApplication() {
         // Cerrar sesión en Firebase Authentication
         FirebaseAuth.getInstance().signOut()

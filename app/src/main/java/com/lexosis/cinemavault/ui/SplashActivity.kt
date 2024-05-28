@@ -25,22 +25,22 @@ class SplashActivity : AppCompatActivity() {
             insets
         }
 
-            showGIF()
+        showGIF()
 
-            Handler(Looper.getMainLooper()).postDelayed({
-                var intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
-            }, 4000)
+        Handler(Looper.getMainLooper()).postDelayed({
+            var intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }, 4000)
 
-        }
+    }
 
 
-        private fun showGIF(){
-            val imageView: ImageView = findViewById(R.id.imagenViewPop)
-            Glide.with(this).load(R.drawable.popcorn).into(imageView)
+    private fun showGIF() {
+        val imageView: ImageView = findViewById(R.id.imagenViewPop)
+        Glide.with(this).load(R.drawable.popcorn).into(imageView)
 
-            }
+    }
 
 
 }

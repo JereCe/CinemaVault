@@ -11,12 +11,13 @@ import com.lexosis.cinemavault.model.MovieDb
 import com.lexosis.cinemavault.ui.movie.MovieActivity
 
 
-class MovieListAdapter (private val mainViewModel: MainViewModel) : RecyclerView.Adapter<MovieListViewHolder>() {
+class MovieListAdapter(private val mainViewModel: MainViewModel) :
+    RecyclerView.Adapter<MovieListViewHolder>() {
 
-    var movies : MutableList<MovieDb> = ArrayList<MovieDb>()
+    var movies: MutableList<MovieDb> = ArrayList<MovieDb>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return MovieListViewHolder(layoutInflater.inflate(R.layout.movie_list_item,parent,false))
+        return MovieListViewHolder(layoutInflater.inflate(R.layout.movie_list_item, parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -26,22 +27,28 @@ class MovieListAdapter (private val mainViewModel: MainViewModel) : RecyclerView
     override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) {
 
         Glide.with(holder.imagenMovie)
-            .load("https://image.tmdb.org/t/p/w300" +movies[position].poster_path).into(holder.imagenMovie)
+            .load("https://image.tmdb.org/t/p/w300" + movies[position].poster_path)
+            .into(holder.imagenMovie)
 
-        holder.btnMovieWatchList.setOnClickListener{
-            mainViewModel.saveFavoriteMovie(movies[position].id,movies[position].title,movies[position].release_date,movies[position].poster_path)
+        holder.btnMovieWatchList.setOnClickListener {
+            mainViewModel.saveFavoriteMovie(
+                movies[position].id,
+                movies[position].title,
+                movies[position].release_date,
+                movies[position].poster_path
+            )
         }
-        holder.cvMainMovie.setOnClickListener{
+        holder.cvMainMovie.setOnClickListener {
             val context = holder.itemView.context
-            var intent = Intent(context,MovieActivity::class.java)
-            intent.putExtra("ID",movies[position].id)
+            var intent = Intent(context, MovieActivity::class.java)
+            intent.putExtra("ID", movies[position].id)
             context.startActivity(intent)
 
 
         }
     }
 
-    fun update(lista : MutableList<MovieDb>){
+    fun update(lista: MutableList<MovieDb>) {
         movies = lista
         this.notifyDataSetChanged()
     }

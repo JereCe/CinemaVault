@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.lexosis.cinemavault.R
 import com.lexosis.cinemavault.ui.LoginActivity
+import com.lexosis.cinemavault.ui.main.MainActivity
 import com.lexosis.cinemavault.ui.watchlist.WatchListActivity
 
 
@@ -25,6 +26,7 @@ class MovieActivity : AppCompatActivity() {
     private val _TAG = "API-MOVIE"
     private lateinit var btnWatchListActivity: Button
     private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var btnMovie: Button
     private lateinit var btnExit: Button
     private lateinit var btnBack: ImageView
     private lateinit var ivMoviePoster: ImageView
@@ -67,6 +69,7 @@ class MovieActivity : AppCompatActivity() {
     }
 
     private fun bindView() {
+        btnMovie = findViewById(R.id.btnMovie)
         btnWatchListActivity = findViewById(R.id.btnWatchList)
         btnExit = findViewById(R.id.btnExit)
         btnBack = findViewById(R.id.btnBack)
@@ -108,6 +111,11 @@ class MovieActivity : AppCompatActivity() {
         viewModel.tvMovieDescription.observe(this) {
             tvMovieDescription.text = it
         }
+        btnMovie.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+
+        }
 
         btnWatchListActivity.setOnClickListener {
             val intent = Intent(this, WatchListActivity::class.java)
@@ -117,6 +125,10 @@ class MovieActivity : AppCompatActivity() {
         btnExit.setOnClickListener {
             exitApplication()
 
+        }
+
+        btnBack.setOnClickListener {
+            finish()
         }
     }
 

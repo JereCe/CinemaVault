@@ -31,34 +31,34 @@ class MainViewModel : ViewModel() {
     var movies = MutableLiveData<ArrayList<MovieDb>>()
     var movie = MutableLiveData<MovieDetail>()
     var moviesSearch = MutableLiveData<ArrayList<MovieDb>>()
-    var language ="es-ES"
+    var language = "es-ES"
     var page = 1
     var api_key = "4bc1debd238c329f82010708dc26b250"
     var id = 792307
 
     //Funciones
-    fun onStart(){
+    fun onStart() {
         scope.launch {
             kotlin.runCatching {
-                moviesRepo.getMovies(language,page,api_key)
+                moviesRepo.getMovies(language, page, api_key)
             }.onSuccess {
-                Log.d(_TAG,"Movies onSuccess")
+                Log.d(_TAG, "Movies onSuccess")
                 movies.postValue(it)
             }.onFailure {
-                Log.e(_TAG,"Movies error: "+ it)
+                Log.e(_TAG, "Movies error: " + it)
             }
         }
     }
 
-    fun searchMovieList(movieName : String){
+    fun searchMovieList(movieName: String) {
         scope.launch {
             kotlin.runCatching {
-                moviesRepo.searchMovies(movieName,language, api_key)
+                moviesRepo.searchMovies(movieName, language, api_key)
             }.onSuccess {
-                Log.d(_TAG,"Movies Search onSuccess")
+                Log.d(_TAG, "Movies Search onSuccess")
                 moviesSearch.postValue(it)
             }.onFailure {
-                Log.e(_TAG,"Movies Search error: "+ it)
+                Log.e(_TAG, "Movies Search error: " + it)
             }
         }
 

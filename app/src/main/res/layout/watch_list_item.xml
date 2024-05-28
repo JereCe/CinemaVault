@@ -6,62 +6,65 @@
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cvWLMovie"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="@color/inputText"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardCornerRadius="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:backgroundTint="@color/inputText"
-        app:cardCornerRadius="25dp">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <!-- Imagen izquierda -->
+
             <ImageView
                 android:id="@+id/ivWatchList"
-                android:layout_marginStart="10dp"
                 android:layout_width="60dp"
                 android:layout_height="80dp"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp" />
 
-            <!-- Contenedor de texto -->
+
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_marginStart="20dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <!-- Texto arriba -->
+
                 <TextView
 
-                    android:layout_marginTop="15dp"
                     android:id="@+id/tvNameMovie"
-                    android:textStyle="bold"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <!-- Texto abajo -->
-                <TextView
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
+                    android:textStyle="bold" />
+
+
+                <TextView
                     android:id="@+id/tvDateMovie"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp" />
             </LinearLayout>
 
-            <!-- Imagen derecha -->
+
             <ImageView
-                android:layout_marginEnd="10dp"
-                android:src="@drawable/ic_btn_fav_menu_active"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_btn_fav_menu_active" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

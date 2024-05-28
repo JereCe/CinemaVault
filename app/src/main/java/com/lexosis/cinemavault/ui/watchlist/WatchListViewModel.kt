@@ -11,27 +11,29 @@ import kotlinx.coroutines.newSingleThreadContext
 import kotlin.coroutines.CoroutineContext
 
 class WatchListViewModel : ViewModel() {
-
+    //Constante
     private val _TAG = "API-MOVIE"
     private val coroutineContext: CoroutineContext = newSingleThreadContext("lexosis")
     private val scope = CoroutineScope(coroutineContext)
+
+    //Dependencias
     private val favoriteRepo = FavoriteRepository()
 
+    //Propiedades
     var WLMovies = MutableLiveData<ArrayList<FavoriteMovie>>()
     var id = 792307
 
-
-    fun onStart(){
+    //Funciones
+    fun onStart() {
         scope.launch {
             kotlin.runCatching {
                 favoriteRepo.getFavoriteMovies()
             }.onSuccess {
-                Log.d(_TAG,"Movies onSuccess")
+                Log.d(_TAG, "Movies onSuccess")
                 WLMovies.postValue(it)
             }.onFailure {
-                Log.e(_TAG,"Movies error: "+ it)
+                Log.e(_TAG, "Movies error: " + it)
             }
         }
     }
-
 }

@@ -22,12 +22,12 @@ import com.lexosis.cinemavault.ui.watchlist.WatchListActivity
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
     private lateinit var rvMovies: RecyclerView
-    private lateinit var adapterMovieList : MovieListAdapter
+    private lateinit var adapterMovieList: MovieListAdapter
     private val _TAG = "API-MOVIE"
-    private lateinit var svMovielist : SearchView
+    private lateinit var svMovielist: SearchView
     private lateinit var btnWatchListActivity: Button
     private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var btnExit : Button
+    private lateinit var btnExit: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,15 +48,16 @@ class MainActivity : AppCompatActivity() {
         viewModel.onStart()
     }
 
-    private fun bindViewModel(){
+    private fun bindViewModel() {
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        viewModel.movies.observe(this){
+        viewModel.movies.observe(this) {
             adapterMovieList.update(it)
         }
     }
-    private fun bindView(){
+
+    private fun bindView() {
         rvMovies = findViewById(R.id.rvMovies)
-        rvMovies.layoutManager = GridLayoutManager(this,2)
+        rvMovies.layoutManager = GridLayoutManager(this, 2)
         adapterMovieList = MovieListAdapter(viewModel)
         rvMovies.adapter = adapterMovieList
         svMovielist = findViewById(R.id.svMoviesList)
@@ -64,6 +65,7 @@ class MainActivity : AppCompatActivity() {
         btnExit = findViewById(R.id.btnExit)
         setObserversAndEvents()
     }
+
     private fun setObserversAndEvents() {
         svMovielist.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -87,10 +89,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        btnExit.setOnClickListener{
+        btnExit.setOnClickListener {
             exitApplication()
         }
     }
+
     private fun exitApplication() {
         // Cerrar sesión en Firebase Authentication
         FirebaseAuth.getInstance().signOut()

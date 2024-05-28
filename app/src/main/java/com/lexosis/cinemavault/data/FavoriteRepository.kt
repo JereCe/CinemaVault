@@ -16,13 +16,13 @@ class FavoriteRepository {
 
     fun saveFavoriteMovie(pelicula: FavoriteMovie) {
         if (userId != null) {
-           db.collection("usuarios").document(userId.email.toString())
-               .collection("peliculasFavoritas").document(pelicula.id.toString())
-               .set(pelicula)
+            db.collection("usuarios").document(userId.email.toString())
+                .collection("peliculasFavoritas").document(pelicula.id.toString())
+                .set(pelicula)
                 .addOnSuccessListener { Log.d(_TAG, "Película favorita guardada con éxito") }
                 .addOnFailureListener { e -> Log.w(_TAG, "Error al guardar película favorita", e) }
         } else {
-            Log.d(_TAG,"null")
+            Log.d(_TAG, "null")
         }
     }
 

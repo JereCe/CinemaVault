@@ -17,9 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </ImageView>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <Button
@@ -30,11 +28,11 @@
         android:background="@drawable/rounded_btn"
         android:text="@string/btnLogin"
         android:textAllCaps="true"
-        android:textSize="15sp"
         android:textColor="@color/black"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2">
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
-    </Button>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,9 +17,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/popcorn"
-        tools:srcCompat="@drawable/popcorn">
+        tools:srcCompat="@drawable/popcorn" />
 
-    </ImageView>
 
     <ImageView
         android:layout_width="226dp"
@@ -28,10 +27,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/carga"
-        app:layout_constraintTop_toBottomOf="@+id/imagenViewPop">
+        app:layout_constraintTop_toBottomOf="@+id/imagenViewPop"
+        app:srcCompat="@drawable/carga" />
 
-
-    </ImageView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
