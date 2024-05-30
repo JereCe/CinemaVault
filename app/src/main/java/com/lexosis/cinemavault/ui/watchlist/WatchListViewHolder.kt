@@ -14,5 +14,6 @@ class WatchListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val tvNameMovie = itemView.findViewById<TextView>(R.id.tvNameMovie)
     val tvDateMovie = itemView.findViewById<TextView>(R.id.tvDateMovie)
     val cvWLMovie = itemView.findViewById<CardView>(R.id.cvWLMovie)
+    val btnFavorite = itemView.findViewById<ImageView>(R.id.btnFavorite)
 
 }

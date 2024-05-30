@@ -55,7 +55,7 @@ class WatchListActivity : AppCompatActivity() {
     private fun bindView() {
         rvWatchList = findViewById(R.id.rvWatchList)
         rvWatchList.layoutManager = LinearLayoutManager(this)
-        adapterWL = WatchListAdapter()
+        adapterWL = WatchListAdapter(viewModel)
         rvWatchList.adapter = adapterWL
         svWatchList = findViewById(R.id.svWatchList)
         btnMovieList = findViewById(R.id.btnMovie)

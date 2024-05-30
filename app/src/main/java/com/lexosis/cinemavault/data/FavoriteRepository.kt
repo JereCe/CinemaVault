@@ -27,6 +27,7 @@ class FavoriteRepository {
     }
 
     suspend fun getFavoriteMovies(): ArrayList<FavoriteMovie> {
+        Log.d(_TAG, "entro a favorite repository")
         val peliculasFavoritas = ArrayList<FavoriteMovie>()
         if (userId != null) {
             try {
@@ -34,8 +35,8 @@ class FavoriteRepository {
                     .collection("usuarios").document(userId.email.toString())
                     .collection("peliculasFavoritas")
                     .get()
-                    .await() // Await suspends the coroutine until the task is complete
-
+                    .await()
+                Log.d(_TAG, "await")
                 for (document in documents) {
                     val pelicula = document.toObject(FavoriteMovie::class.java)
                     peliculasFavoritas.add(pelicula)
@@ -49,4 +50,22 @@ class FavoriteRepository {
         }
         return peliculasFavoritas
     }
+
+    fun deleteFavoriteMovie(movieId: String) {
+        userId?.let { user ->
+            val userDocumentRef = db.collection("usuarios").document(user.email.toString())
+            val favoriteMovieDocumentRef = userDocumentRef
+                .collection("peliculasFavoritas").document(movieId)
+
+            favoriteMovieDocumentRef
+                .delete()
+                .addOnSuccessListener { Log.d(_TAG, "Película favorita eliminada con éxito") }
+                .addOnFailureListener { e -> Log.w(_TAG, "Error al eliminar película favorita", e) }
+        } ?: run {
+            Log.d(_TAG, "userId es null")
+        }
+    }
+
+
+
 }

@@ -21,7 +21,6 @@ class WatchListViewModel : ViewModel() {
 
     //Propiedades
     var WLMovies = MutableLiveData<ArrayList<FavoriteMovie>>()
-    var id = 792307
 
     //Funciones
     fun onStart() {
@@ -35,5 +34,10 @@ class WatchListViewModel : ViewModel() {
                 Log.e(_TAG, "Movies error: " + it)
             }
         }
+    }
+
+    fun deleteFavorite(id : Int){
+        favoriteRepo.deleteFavoriteMovie(id.toString())
+        onStart()
     }
 }
