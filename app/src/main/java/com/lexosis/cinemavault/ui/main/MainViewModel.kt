@@ -30,6 +30,7 @@ class MainViewModel : ViewModel() {
     //Propiedades
 
     var WLMovies = MutableLiveData<ArrayList<FavoriteMovie>>()
+    var ids = MutableLiveData<ArrayList<Int>>()
     var movies = MutableLiveData<ArrayList<MovieDb>>()
     var movie = MutableLiveData<MovieDetail>()
     var moviesSearch = MutableLiveData<ArrayList<MovieDb>>()
@@ -64,28 +65,35 @@ class MainViewModel : ViewModel() {
             }
         }
     }
+
     fun saveFavoriteMovie(id: Int, title: String, releaseDate: String, posterPath: String) {
         val favoriteMovie = FavoriteMovie(id, title, releaseDate, posterPath)
         favoriteRepo.saveFavoriteMovie(favoriteMovie)
     }
+
     fun favorite() {
         Log.d(_TAG, "entro a favoritos")
         scope.launch {
             kotlin.runCatching {
                 favoriteRepo.getFavoriteMovies()
-            }.onSuccess {
+            }.onSuccess { movies ->
                 Log.d(_TAG, "Movies onSuccess")
-                WLMovies.postValue(it)
-            }.onFailure {
-                Log.e(_TAG, "Movies error: " + it)
+                val movieIds = movies.map { it.id }
+                val arrayList = ArrayList<Int>(movieIds)
+                ids.postValue(arrayList)
+                WLMovies.postValue(movies)
+            }.onFailure { exception ->
+                Log.e(_TAG, "Movies error: $exception")
             }
         }
     }
+
     fun isFavorite(id: Int): Boolean {
 
         return WLMovies.value?.any { it.id == id } == true
-}
-    fun deleteFavorite(id : Int){
+    }
+
+    fun deleteFavorite(id: Int) {
         favoriteRepo.deleteFavoriteMovie(id.toString())
     }
 

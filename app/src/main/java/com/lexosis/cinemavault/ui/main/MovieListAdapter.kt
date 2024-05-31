@@ -13,12 +13,11 @@ import com.lexosis.cinemavault.model.MovieDb
 import com.lexosis.cinemavault.ui.movie.MovieActivity
 
 
-
 class MovieListAdapter(private val mainViewModel: MainViewModel) :
     RecyclerView.Adapter<MovieListViewHolder>() {
 
-
     var movies: MutableList<MovieDb> = ArrayList<MovieDb>()
+    private var observedIds: List<Int> = listOf()
     private val _TAG = "API-MOVIE"
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -31,30 +30,42 @@ class MovieListAdapter(private val mainViewModel: MainViewModel) :
 
     override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) {
 
-        if(mainViewModel.isFavorite(movies[position].id)){
-            holder.btnMovieWatchList.setColorFilter((ContextCompat.getColor(holder.itemView.context, R.color.active)))
-            Log.d(_TAG, "deberia teñirse")
-        }else{
-            holder.btnMovieWatchList.setColorFilter((ContextCompat.getColor(holder.itemView.context, R.color.inactive)))
-            Log.d(_TAG, "deberia falso")
+        val movie = movies[position]
+
+        val color = if (observedIds.contains(movie.id)) {
+            ContextCompat.getColor(holder.itemView.context, R.color.active)
+        } else {
+            ContextCompat.getColor(holder.itemView.context, R.color.inactive)
         }
+        holder.btnMovieWatchList.setColorFilter(color)
+
 
         Glide.with(holder.imagenMovie)
             .load("https://image.tmdb.org/t/p/w300" + movies[position].poster_path)
             .into(holder.imagenMovie)
 
         holder.btnMovieWatchList.setOnClickListener {
-            if(mainViewModel.isFavorite(movies[position].id)){
-                holder.btnMovieWatchList.setColorFilter((ContextCompat.getColor(holder.itemView.context, R.color.inactive)))
+            if (mainViewModel.isFavorite(movies[position].id)) {
+                holder.btnMovieWatchList.setColorFilter(
+                    (ContextCompat.getColor(
+                        holder.itemView.context,
+                        R.color.inactive
+                    ))
+                )
                 mainViewModel.deleteFavorite(movies[position].id)
-            }else{
+            } else {
                 mainViewModel.saveFavoriteMovie(
                     movies[position].id,
                     movies[position].title,
                     movies[position].release_date,
                     movies[position].poster_path
                 )
-                holder.btnMovieWatchList.setColorFilter((ContextCompat.getColor(holder.itemView.context, R.color.active)))
+                holder.btnMovieWatchList.setColorFilter(
+                    (ContextCompat.getColor(
+                        holder.itemView.context,
+                        R.color.active
+                    ))
+                )
             }
         }
         holder.cvMainMovie.setOnClickListener {
@@ -68,5 +79,10 @@ class MovieListAdapter(private val mainViewModel: MainViewModel) :
     fun update(lista: MutableList<MovieDb>) {
         movies = lista
         this.notifyDataSetChanged()
+    }
+
+    fun updateObservedIds(ids: List<Int>) {
+        observedIds = ids
+        notifyDataSetChanged()
     }
 }

@@ -36,7 +36,7 @@ class WatchListViewModel : ViewModel() {
         }
     }
 
-    fun deleteFavorite(id : Int){
+    fun deleteFavorite(id: Int) {
         favoriteRepo.deleteFavoriteMovie(id.toString())
         onStart()
     }

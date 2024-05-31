@@ -39,6 +39,7 @@ class MovieActivity : AppCompatActivity() {
     private lateinit var tvMovieOriginalTitle: TextView
     private lateinit var tvMovieDescription: TextView
     private var id: Int = 0
+    private var ids = ArrayList<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         id = intent.extras!!.getInt("ID")
@@ -94,11 +95,17 @@ class MovieActivity : AppCompatActivity() {
                 .load("https://image.tmdb.org/t/p/original" + imagen).into(ivMoviePoster)
         }
 
-        if(viewModel.isFavorite(id)){
-            btnFavorite.setColorFilter((ContextCompat.getColor(this, R.color.active)))
-        }else{
-            btnFavorite.setColorFilter((ContextCompat.getColor(this, R.color.inactive)))
+        viewModel.WLMovies.observe(this) {
+            for (it in it) {
+                ids.add(it.id)
+            }
+            if (id in ids) {
+                btnFavorite.setColorFilter((ContextCompat.getColor(this, R.color.active)))
+            } else {
+                btnFavorite.setColorFilter((ContextCompat.getColor(this, R.color.inactive)))
+            }
         }
+
 
 
         viewModel.tvTitleMovie.observe(this) {
@@ -138,12 +145,12 @@ class MovieActivity : AppCompatActivity() {
         btnBack.setOnClickListener {
             finish()
         }
-        btnFavorite.setOnClickListener{
-            if(viewModel.isFavorite(id)){
+        btnFavorite.setOnClickListener {
+            if (viewModel.isFavorite(id)) {
                 viewModel.deleteFavorite(id)
                 btnFavorite.setColorFilter((ContextCompat.getColor(this, R.color.inactive)))
 
-            }else{
+            } else {
 
                 viewModel.saveFavoriteMovie()
                 btnFavorite.setColorFilter((ContextCompat.getColor(this, R.color.active)))

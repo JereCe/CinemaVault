@@ -29,8 +29,7 @@ class MovieViewModel : ViewModel() {
     var tvMovieOriginalTitle: MutableLiveData<String> = MutableLiveData<String>()
     var tvMovieDescription: MutableLiveData<String> = MutableLiveData<String>()
     var WLMovies = MutableLiveData<ArrayList<FavoriteMovie>>()
-    lateinit var favoriteMovie : FavoriteMovie
-
+    lateinit var favoriteMovie: FavoriteMovie
 
 
     private val favoriteRepo = FavoriteRepository()
@@ -41,6 +40,7 @@ class MovieViewModel : ViewModel() {
 
 
     fun onStart(id: Int) {
+        favorite()
         scope.launch {
             kotlin.runCatching {
                 moviesRepo.getMovie(id, language, api_key)
@@ -53,7 +53,7 @@ class MovieViewModel : ViewModel() {
                 tvMovieGenre.postValue("Genero: " + it.genres.joinToString(separator = ", ") { it.name })
                 tvMovieOriginalTitle.postValue("Titulo original: " + it.original_title)
                 tvMovieDescription.postValue("Descripcion: " + it.overview)
-                favoriteMovie= FavoriteMovie(it.id,it.title,it.release_date,it.poster_path)
+                favoriteMovie = FavoriteMovie(it.id, it.title, it.release_date, it.poster_path)
             }.onFailure {
                 Log.e(_TAG, "Movies error: " + it)
             }
@@ -75,10 +75,10 @@ class MovieViewModel : ViewModel() {
     }
 
     fun isFavorite(id: Int): Boolean {
-        favorite()
         return WLMovies.value?.any { it.id == id } == true
     }
-    fun deleteFavorite(id : Int){
+
+    fun deleteFavorite(id: Int) {
         favoriteRepo.deleteFavoriteMovie(id.toString())
     }
 

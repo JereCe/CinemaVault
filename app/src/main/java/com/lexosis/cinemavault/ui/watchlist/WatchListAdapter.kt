@@ -12,7 +12,8 @@ import com.lexosis.cinemavault.ui.movie.MovieActivity
 import com.lexosis.cinemavault.ui.watchlist.WatchListViewHolder
 
 
-class WatchListAdapter(private val viewModel: WatchListViewModel) : RecyclerView.Adapter<WatchListViewHolder>() {
+class WatchListAdapter(private val viewModel: WatchListViewModel) :
+    RecyclerView.Adapter<WatchListViewHolder>() {
 
     var movies: MutableList<FavoriteMovie> = ArrayList<FavoriteMovie>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WatchListViewHolder {
@@ -37,7 +38,7 @@ class WatchListAdapter(private val viewModel: WatchListViewModel) : RecyclerView
             context.startActivity(intent)
         }
 
-        holder.btnFavorite.setOnClickListener{
+        holder.btnFavorite.setOnClickListener {
             viewModel.deleteFavorite(movies[position].id)
         }
     }

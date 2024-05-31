@@ -82,6 +82,10 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        viewModel.ids.observe(this) { observedIds ->
+            adapterMovieList.updateObservedIds(observedIds)
+        }
+
         viewModel.moviesSearch.observe(this@MainActivity, Observer { movies ->
             adapterMovieList.update(movies)
         })
