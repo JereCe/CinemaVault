@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
@@ -31,7 +32,7 @@ class MovieActivity : AppCompatActivity() {
     private lateinit var btnBack: ImageView
     private lateinit var ivMoviePoster: ImageView
     private lateinit var tvTitleMovie: TextView
-    private lateinit var ivFavorite: ImageView
+    private lateinit var btnFavorite: ImageView
     private lateinit var tvMovieInfo: TextView
     private lateinit var tvMovieTagline: TextView
     private lateinit var tvMovieGenre: TextView
@@ -75,7 +76,7 @@ class MovieActivity : AppCompatActivity() {
         btnBack = findViewById(R.id.btnBack)
         ivMoviePoster = findViewById(R.id.ivMoviePoster)
         tvTitleMovie = findViewById(R.id.tvTitleMovie)
-        ivFavorite = findViewById(R.id.ivFavorite)
+        btnFavorite = findViewById(R.id.btnFavorite)
         tvMovieInfo = findViewById(R.id.tvMovieInfo)
         tvMovieTagline = findViewById(R.id.tvMovieTagline)
         tvMovieGenre = findViewById(R.id.tvMovieGenre)
@@ -90,8 +91,15 @@ class MovieActivity : AppCompatActivity() {
         viewModel.ivMoviePoster.observe(this) {
             var imagen: String = it
             Glide.with(ivMoviePoster)
-                .load("https://image.tmdb.org/t/p/w500" + imagen).into(ivMoviePoster)
+                .load("https://image.tmdb.org/t/p/original" + imagen).into(ivMoviePoster)
         }
+
+        if(viewModel.isFavorite(id)){
+            btnFavorite.setColorFilter((ContextCompat.getColor(this, R.color.active)))
+        }else{
+            btnFavorite.setColorFilter((ContextCompat.getColor(this, R.color.inactive)))
+        }
+
 
         viewModel.tvTitleMovie.observe(this) {
             tvTitleMovie.text = it
@@ -129,6 +137,18 @@ class MovieActivity : AppCompatActivity() {
 
         btnBack.setOnClickListener {
             finish()
+        }
+        btnFavorite.setOnClickListener{
+            if(viewModel.isFavorite(id)){
+                viewModel.deleteFavorite(id)
+                btnFavorite.setColorFilter((ContextCompat.getColor(this, R.color.inactive)))
+
+            }else{
+
+                viewModel.saveFavoriteMovie()
+                btnFavorite.setColorFilter((ContextCompat.getColor(this, R.color.active)))
+
+            }
         }
     }
 

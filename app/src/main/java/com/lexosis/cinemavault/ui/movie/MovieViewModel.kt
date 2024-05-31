@@ -3,7 +3,9 @@ package com.lexosis.cinemavault.ui.movie
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.lexosis.cinemavault.data.FavoriteRepository
 import com.lexosis.cinemavault.data.MoviesRepository
+import com.lexosis.cinemavault.model.FavoriteMovie
 import com.lexosis.cinemavault.model.MovieDetail
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -26,6 +28,12 @@ class MovieViewModel : ViewModel() {
     var tvMovieGenre: MutableLiveData<String> = MutableLiveData<String>()
     var tvMovieOriginalTitle: MutableLiveData<String> = MutableLiveData<String>()
     var tvMovieDescription: MutableLiveData<String> = MutableLiveData<String>()
+    var WLMovies = MutableLiveData<ArrayList<FavoriteMovie>>()
+    lateinit var favoriteMovie : FavoriteMovie
+
+
+
+    private val favoriteRepo = FavoriteRepository()
 
     var language = "es-ES"
     var page = 1
@@ -42,15 +50,40 @@ class MovieViewModel : ViewModel() {
                 tvTitleMovie.postValue(it.title)
                 tvMovieInfo.postValue(it.runtime.toString() + " • " + it.release_date)
                 tvMovieTagline.postValue(it.tagline)
-
                 tvMovieGenre.postValue("Genero: " + it.genres.joinToString(separator = ", ") { it.name })
                 tvMovieOriginalTitle.postValue("Titulo original: " + it.original_title)
                 tvMovieDescription.postValue("Descripcion: " + it.overview)
+                favoriteMovie= FavoriteMovie(it.id,it.title,it.release_date,it.poster_path)
             }.onFailure {
                 Log.e(_TAG, "Movies error: " + it)
             }
         }
     }
 
+    fun favorite() {
+        Log.d(_TAG, "entro a favoritos")
+        scope.launch {
+            kotlin.runCatching {
+                favoriteRepo.getFavoriteMovies()
+            }.onSuccess {
+                Log.d(_TAG, "Movies onSuccess")
+                WLMovies.postValue(it)
+            }.onFailure {
+                Log.e(_TAG, "Movies error: " + it)
+            }
+        }
+    }
+
+    fun isFavorite(id: Int): Boolean {
+        favorite()
+        return WLMovies.value?.any { it.id == id } == true
+    }
+    fun deleteFavorite(id : Int){
+        favoriteRepo.deleteFavoriteMovie(id.toString())
+    }
+
+    fun saveFavoriteMovie() {
+        favoriteRepo.saveFavoriteMovie(favoriteMovie)
+    }
 
 }
