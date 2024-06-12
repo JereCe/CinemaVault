@@ -1,5 +1,6 @@
 package com.lexosis.cinemavault.data
 
+import android.content.Context
 import com.lexosis.cinemavault.model.MovieDb
 import com.lexosis.cinemavault.model.MovieDbResult
 import com.lexosis.cinemavault.model.MovieDetail
@@ -12,9 +13,9 @@ class MoviesRepository {
         return MoviesDataSource.Companion.getMovies(language, page, api_key)
     }
 
-    suspend fun getMovie(id: Int, language: String, api_key: String): MovieDetail {
+    suspend fun getMovie(id: Int, language: String, api_key: String, context : Context): MovieDetail {
 
-        return MoviesDataSource.Companion.getMovie(id, language, api_key)
+        return MoviesDataSource.Companion.getMovie(id, language, api_key, context)
     }
 
     suspend fun searchMovies(query: String, language: String, api_key: String): ArrayList<MovieDb> {

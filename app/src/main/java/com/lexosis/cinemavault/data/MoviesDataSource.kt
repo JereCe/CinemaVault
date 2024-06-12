@@ -1,7 +1,11 @@
 package com.lexosis.cinemavault.data
 
+import android.content.Context
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
+import com.lexosis.cinemavault.data.dbLocal.AppDataBase
+import com.lexosis.cinemavault.data.dbLocal.toMovieDetail
+import com.lexosis.cinemavault.data.dbLocal.toMovieDetailLocal
 
 import com.lexosis.cinemavault.model.MovieDb
 
@@ -40,21 +44,29 @@ class MoviesDataSource {
             }
         }
 
-        suspend fun getMovie(id: Int, language: String, api_key: String): MovieDetail {
+        suspend fun getMovie(id: Int, language: String, api_key: String,context :Context): MovieDetail {
             Log.d(_TAG, "Movies DataSource getMovies")
-            val result = api.getMovie(id, language, api_key).execute()
-            if (result.isSuccessful) {
-                Log.d(_TAG, "Resultado Exitoso getMovie")
-                result.body() ?: throw Exception("No se recibieron datos de la pelicula")
-                val movieDetail = result.body()
-                if (movieDetail != null) {
-                    return movieDetail
+            var db = AppDataBase.getInstance(context)
+            var movieLocal  = db.moviesDetailDAO().getMovieByPK(id)
+            if(movieLocal != null){
+                Log.d(_TAG,"neutron")
+                return movieLocal.toMovieDetail()
+            }else {
+                val result = api.getMovie(id, language, api_key).execute()
+                if (result.isSuccessful) {
+                    Log.d(_TAG, "Resultado Exitoso getMovie")
+                    result.body() ?: throw Exception("No se recibieron datos de la pelicula")
+                    val movieDetail = result.body()
+                    if (movieDetail != null) {
+                        db.moviesDetailDAO().saveMovie(movieDetail.toMovieDetailLocal())
+                        return movieDetail
+                    } else {
+                        throw Exception("No se recibieron datos de la pelicula")
+                    }
                 } else {
-                    throw Exception("No se recibieron datos de la pelicula")
+                    Log.e(_TAG, "Error en llamado API: " + result.message() + "getMovies")
+                    throw Exception("Error en llamado API")
                 }
-            } else {
-                Log.e(_TAG, "Error en llamado API: " + result.message() + "getMovies")
-                throw Exception("Error en llamado API")
             }
         }
 

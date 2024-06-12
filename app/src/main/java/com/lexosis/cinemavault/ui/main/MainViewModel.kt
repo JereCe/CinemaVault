@@ -66,10 +66,22 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun saveFavoriteMovie(id: Int, title: String, releaseDate: String, posterPath: String) {
-        val favoriteMovie = FavoriteMovie(id, title, releaseDate, posterPath)
-        favoriteRepo.saveFavoriteMovie(favoriteMovie)
-    }
+
+
+    fun favoriteSave(id: Int, title: String, releaseDate: String, posterPath: String) {
+        scope.launch {
+            kotlin.runCatching {
+                val favoriteMovie = FavoriteMovie(id, title, releaseDate, posterPath)
+                favoriteRepo.saveFavoriteMovies(favoriteMovie)
+            }.onSuccess {
+                Log.d(_TAG, "Movies onSuccess")
+                favorite()
+            }.onFailure { exception ->
+                Log.e(_TAG, "Movies error: $exception")
+            }
+        }
+
+}
 
     fun favorite() {
         Log.d(_TAG, "entro a favoritos")
@@ -89,12 +101,21 @@ class MainViewModel : ViewModel() {
     }
 
     fun isFavorite(id: Int): Boolean {
-
         return WLMovies.value?.any { it.id == id } == true
     }
 
-    fun deleteFavorite(id: Int) {
-        favoriteRepo.deleteFavoriteMovie(id.toString())
+    fun favoriteDelete(id:Int) {
+        Log.d(_TAG, "entro a borrar favorito")
+        scope.launch {
+            kotlin.runCatching {
+                favoriteRepo.deleteFavoriteMovies(id.toString())
+            }.onSuccess {
+                Log.d(_TAG, "Movies onSuccess")
+                favorite()
+            }.onFailure {
+                Log.e(_TAG, "Movies error: " + it)
+            }
+        }
     }
 
 }

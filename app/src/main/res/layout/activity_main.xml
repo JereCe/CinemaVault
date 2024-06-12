@@ -8,11 +8,12 @@
     android:background="@color/background"
     tools:context=".ui.main.MainActivity">
 
-    <!-- Comienza ConstraintLayout (clSearch) -->
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clSearch"
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -31,9 +32,7 @@
             app:layout_constraintVertical_bias="0.5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <!-- Termina ConstraintLayout (clSearch) -->
 
-    <!-- Comienza ConstraintLayout (clFooter) -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clFooter"
         android:layout_width="match_parent"
@@ -99,9 +98,7 @@
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <!-- Termina ConstraintLayout (clFooter) -->
 
-    <!-- Comienza ConstraintLayout (clRV) -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clRV"
         android:layout_width="match_parent"
@@ -134,6 +131,6 @@
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <!-- Termina ConstraintLayout (clRV) -->
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

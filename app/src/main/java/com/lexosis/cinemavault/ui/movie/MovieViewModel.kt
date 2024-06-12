@@ -1,5 +1,6 @@
 package com.lexosis.cinemavault.ui.movie
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -39,11 +40,11 @@ class MovieViewModel : ViewModel() {
     var api_key = "4bc1debd238c329f82010708dc26b250"
 
 
-    fun onStart(id: Int) {
+    fun onStart(id: Int,context: Context) {
         favorite()
         scope.launch {
             kotlin.runCatching {
-                moviesRepo.getMovie(id, language, api_key)
+                moviesRepo.getMovie(id, language, api_key,context)
             }.onSuccess {
                 Log.d(_TAG, "Movies onSuccess")
                 ivMoviePoster.postValue(it.poster_path)
@@ -78,12 +79,37 @@ class MovieViewModel : ViewModel() {
         return WLMovies.value?.any { it.id == id } == true
     }
 
-    fun deleteFavorite(id: Int) {
-        favoriteRepo.deleteFavoriteMovie(id.toString())
+
+
+
+
+
+    fun favoriteSave() {
+        Log.d(_TAG, "entro a borrar favorito")
+        scope.launch {
+            kotlin.runCatching {
+                favoriteRepo.saveFavoriteMovies(favoriteMovie)
+            }.onSuccess {
+                Log.d(_TAG, "Movies onSuccess")
+                favorite()
+            }.onFailure {
+                Log.e(_TAG, "Movies error: " + it)
+            }
+        }
     }
 
-    fun saveFavoriteMovie() {
-        favoriteRepo.saveFavoriteMovie(favoriteMovie)
+    fun favoriteDelete() {
+        Log.d(_TAG, "entro a borrar favorito")
+        scope.launch {
+            kotlin.runCatching {
+                favoriteRepo.deleteFavoriteMovies(favoriteMovie.id.toString())
+            }.onSuccess {
+                Log.d(_TAG, "Movies onSuccess")
+                favorite()
+            }.onFailure {
+                Log.e(_TAG, "Movies error: " + it)
+            }
+        }
     }
 
 }

@@ -40,4 +40,6 @@ class WatchListViewModel : ViewModel() {
         favoriteRepo.deleteFavoriteMovie(id.toString())
         onStart()
     }
-}
+
+
+    }

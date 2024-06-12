@@ -52,9 +52,9 @@ class MovieListAdapter(private val mainViewModel: MainViewModel) :
                         R.color.inactive
                     ))
                 )
-                mainViewModel.deleteFavorite(movies[position].id)
+                mainViewModel.favoriteDelete(movies[position].id)
             } else {
-                mainViewModel.saveFavoriteMovie(
+                mainViewModel.favoriteSave(
                     movies[position].id,
                     movies[position].title,
                     movies[position].release_date,

@@ -62,7 +62,7 @@ class MovieActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        viewModel.onStart(id)
+        viewModel.onStart(id,this)
     }
 
     private fun bindViewModel() {
@@ -147,14 +147,10 @@ class MovieActivity : AppCompatActivity() {
         }
         btnFavorite.setOnClickListener {
             if (viewModel.isFavorite(id)) {
-                viewModel.deleteFavorite(id)
-                btnFavorite.setColorFilter((ContextCompat.getColor(this, R.color.inactive)))
-
+                ids.remove(id)
+                viewModel.favoriteDelete()
             } else {
-
-                viewModel.saveFavoriteMovie()
-                btnFavorite.setColorFilter((ContextCompat.getColor(this, R.color.active)))
-
+                viewModel.favoriteSave()
             }
         }
     }

@@ -22,7 +22,6 @@ class WatchListActivity : AppCompatActivity() {
     private lateinit var rvWatchList: RecyclerView
     private lateinit var adapterWL: WatchListAdapter
     private val _TAG = "API-MOVIE"
-    private lateinit var svWatchList: SearchView
     private lateinit var btnMovieList: Button
     private lateinit var btnExit: Button
     private lateinit var firebaseAuth: FirebaseAuth
@@ -57,7 +56,6 @@ class WatchListActivity : AppCompatActivity() {
         rvWatchList.layoutManager = LinearLayoutManager(this)
         adapterWL = WatchListAdapter(viewModel)
         rvWatchList.adapter = adapterWL
-        svWatchList = findViewById(R.id.svWatchList)
         btnMovieList = findViewById(R.id.btnMovie)
         btnExit = findViewById(R.id.btnExit)
         setObserversAndEvents()
@@ -71,6 +69,7 @@ class WatchListActivity : AppCompatActivity() {
         btnExit.setOnClickListener {
             exitApplication()
         }
+
     }
 
     private fun exitApplication() {

@@ -14,17 +14,7 @@ class FavoriteRepository {
     private val mAuth = FirebaseAuth.getInstance()
     private val userId = mAuth.currentUser
 
-    fun saveFavoriteMovie(pelicula: FavoriteMovie) {
-        if (userId != null) {
-            db.collection("usuarios").document(userId.email.toString())
-                .collection("peliculasFavoritas").document(pelicula.id.toString())
-                .set(pelicula)
-                .addOnSuccessListener { Log.d(_TAG, "Película favorita guardada con éxito") }
-                .addOnFailureListener { e -> Log.w(_TAG, "Error al guardar película favorita", e) }
-        } else {
-            Log.d(_TAG, "null")
-        }
-    }
+
 
     suspend fun getFavoriteMovies(): ArrayList<FavoriteMovie> {
         Log.d(_TAG, "entro a favorite repository")
@@ -66,6 +56,42 @@ class FavoriteRepository {
         }
     }
 
+
+    suspend fun saveFavoriteMovies(pelicula: FavoriteMovie) {
+        if (userId != null) {
+            try {
+                FirebaseFirestore.getInstance()
+                    .collection("usuarios").document(userId.email.toString())
+                    .collection("peliculasFavoritas").document(pelicula.id.toString())
+                    .set(pelicula)
+                    .await()
+                Log.d(_TAG, "Película favorita guardada con éxito")
+            } catch (e: Exception) {
+                Log.w(_TAG, "Error al guardar película favorita", e)
+            }
+        } else {
+            Log.d(_TAG, "userId es null")
+        }
+    }
+
+    suspend fun deleteFavoriteMovies(movieId: String) {
+        val user = userId
+        if (user != null) {
+            val db = FirebaseFirestore.getInstance()
+            val userDocumentRef = db.collection("usuarios").document(user.email.toString())
+            val favoriteMovieDocumentRef = userDocumentRef
+                .collection("peliculasFavoritas").document(movieId)
+
+            try {
+                favoriteMovieDocumentRef.delete().await()
+                Log.d(_TAG, "Película favorita eliminada con éxito")
+            } catch (e: Exception) {
+                Log.w(_TAG, "Error al eliminar película favorita", e)
+            }
+        } else {
+            Log.d(_TAG, "userId es null")
+        }
+    }
 
 
 }

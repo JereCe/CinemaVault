@@ -1,5 +1,7 @@
 package com.lexosis.cinemavault.model
 
+
+
 data class MovieDetail(
     val adult: Boolean,
     val backdrop_path: String,
