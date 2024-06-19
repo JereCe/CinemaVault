@@ -28,18 +28,27 @@ class WatchListViewModel : ViewModel() {
             kotlin.runCatching {
                 favoriteRepo.getFavoriteMovies()
             }.onSuccess {
-                Log.d(_TAG, "Movies onSuccess")
+                Log.d(_TAG, "Movies Favorite List onSuccess")
                 WLMovies.postValue(it)
             }.onFailure {
-                Log.e(_TAG, "Movies error: " + it)
+                Log.e(_TAG, "Movies Favorite List error: $it")
             }
         }
     }
 
-    fun deleteFavorite(id: Int) {
-        favoriteRepo.deleteFavoriteMovie(id.toString())
-        onStart()
+    fun deleteFavorite(id : Int) {
+        scope.launch {
+            kotlin.runCatching {
+                favoriteRepo.deleteFavoriteMovies(id.toString())
+            }.onSuccess {
+                Log.d(_TAG, "Delete Favorite onSuccess")
+                onStart()
+            }.onFailure {
+                Log.e(_TAG, "Delete Favorite error: $it")
+            }
+        }
     }
+
 
 
     }

@@ -17,7 +17,6 @@ class FavoriteRepository {
 
 
     suspend fun getFavoriteMovies(): ArrayList<FavoriteMovie> {
-        Log.d(_TAG, "entro a favorite repository")
         val peliculasFavoritas = ArrayList<FavoriteMovie>()
         if (userId != null) {
             try {
@@ -31,29 +30,14 @@ class FavoriteRepository {
                     val pelicula = document.toObject(FavoriteMovie::class.java)
                     peliculasFavoritas.add(pelicula)
                 }
-                Log.d(_TAG, "Películas favoritas recuperadas con éxito")
+                Log.d(_TAG, "Successfully Recovered Favorite Movies")
             } catch (e: Exception) {
-                Log.w(_TAG, "Error al recuperar películas favoritas", e)
+                Log.w(_TAG, "Error Recovering Favorite Movies", e)
             }
         } else {
-            Log.d(_TAG, "userId es null")
+            Log.d(_TAG, "userId is null")
         }
         return peliculasFavoritas
-    }
-
-    fun deleteFavoriteMovie(movieId: String) {
-        userId?.let { user ->
-            val userDocumentRef = db.collection("usuarios").document(user.email.toString())
-            val favoriteMovieDocumentRef = userDocumentRef
-                .collection("peliculasFavoritas").document(movieId)
-
-            favoriteMovieDocumentRef
-                .delete()
-                .addOnSuccessListener { Log.d(_TAG, "Película favorita eliminada con éxito") }
-                .addOnFailureListener { e -> Log.w(_TAG, "Error al eliminar película favorita", e) }
-        } ?: run {
-            Log.d(_TAG, "userId es null")
-        }
     }
 
 
@@ -65,12 +49,12 @@ class FavoriteRepository {
                     .collection("peliculasFavoritas").document(pelicula.id.toString())
                     .set(pelicula)
                     .await()
-                Log.d(_TAG, "Película favorita guardada con éxito")
+                Log.d(_TAG, "Favorite movie saved successfully")
             } catch (e: Exception) {
-                Log.w(_TAG, "Error al guardar película favorita", e)
+                Log.w(_TAG, "Error saving favorite movie", e)
             }
         } else {
-            Log.d(_TAG, "userId es null")
+            Log.d(_TAG, "userId is null")
         }
     }
 
@@ -84,12 +68,12 @@ class FavoriteRepository {
 
             try {
                 favoriteMovieDocumentRef.delete().await()
-                Log.d(_TAG, "Película favorita eliminada con éxito")
+                Log.d(_TAG, "Favorite movie deleted successfully")
             } catch (e: Exception) {
-                Log.w(_TAG, "Error al eliminar película favorita", e)
+                Log.w(_TAG, "Error deleting favorite movie", e)
             }
         } else {
-            Log.d(_TAG, "userId es null")
+            Log.d(_TAG, "userId is null")
         }
     }
 

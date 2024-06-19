@@ -36,36 +36,35 @@ class MoviesDataSource {
             val result = api.getMovies(language, page, api_key).execute()
             if (result.isSuccessful) {
                 val responseBody = result.body()
-                Log.d(_TAG, "Resultado Exitoso getMovies")
+                Log.d(_TAG, "Successful result from getMovies")
                 return (responseBody?.results ?: ArrayList()) as ArrayList<MovieDb>
             } else {
-                Log.e(_TAG, "Error en llamado API: " + result.message() + "getMovies")
+                Log.e(_TAG, "Error calling API: " + result.message() + "getMovies")
                 return ArrayList<MovieDb>()
             }
         }
 
         suspend fun getMovie(id: Int, language: String, api_key: String,context :Context): MovieDetail {
-            Log.d(_TAG, "Movies DataSource getMovies")
+            Log.d(_TAG, "Successful result from getMovie")
             var db = AppDataBase.getInstance(context)
             var movieLocal  = db.moviesDetailDAO().getMovieByPK(id)
             if(movieLocal != null){
-                Log.d(_TAG,"neutron")
                 return movieLocal.toMovieDetail()
             }else {
                 val result = api.getMovie(id, language, api_key).execute()
                 if (result.isSuccessful) {
-                    Log.d(_TAG, "Resultado Exitoso getMovie")
-                    result.body() ?: throw Exception("No se recibieron datos de la pelicula")
+                    Log.d(_TAG, "Successful result from getMovie")
+                    result.body() ?: throw Exception("We did not receive any data for the movie.")
                     val movieDetail = result.body()
                     if (movieDetail != null) {
                         db.moviesDetailDAO().saveMovie(movieDetail.toMovieDetailLocal())
                         return movieDetail
                     } else {
-                        throw Exception("No se recibieron datos de la pelicula")
+                        throw Exception("We did not receive any movie data.")
                     }
                 } else {
-                    Log.e(_TAG, "Error en llamado API: " + result.message() + "getMovies")
-                    throw Exception("Error en llamado API")
+                    Log.e(_TAG, "Error calling API: " + result.message() + "getMovie")
+                    throw Exception("Error calling API")
                 }
             }
         }
@@ -75,14 +74,14 @@ class MoviesDataSource {
             language: String,
             api_key: String
         ): ArrayList<MovieDb> {
-            Log.d(_TAG, "Movies DataSource getMovies")
+            Log.d(_TAG, "Movies DataSource searchMovies")
             val result = api.searchMovies(query, language, api_key).execute()
             if (result.isSuccessful) {
                 val responseBody = result.body()
-                Log.d(_TAG, "Resultado Exitoso SearchMovies")
+                Log.d(_TAG, "Successful Result SearchMovies")
                 return (responseBody?.results ?: ArrayList()) as ArrayList<MovieDb>
             } else {
-                Log.e(_TAG, "Error en llamado API: " + result.message() + "SearchMovies")
+                Log.e(_TAG, "Error calling API: " + result.message() + "SearchMovies")
                 return ArrayList<MovieDb>()
             }
         }

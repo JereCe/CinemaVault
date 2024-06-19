@@ -45,10 +45,10 @@ class MainViewModel : ViewModel() {
             kotlin.runCatching {
                 moviesRepo.getMovies(language, page, api_key)
             }.onSuccess {
-                Log.d(_TAG, "Movies onSuccess primero")
+                Log.d(_TAG, "Movie List onSuccess")
                 movies.postValue(it)
             }.onFailure {
-                Log.e(_TAG, "Movies error: " + it)
+                Log.e(_TAG, "Movies List error: " + it)
             }
         }
     }
@@ -74,28 +74,27 @@ class MainViewModel : ViewModel() {
                 val favoriteMovie = FavoriteMovie(id, title, releaseDate, posterPath)
                 favoriteRepo.saveFavoriteMovies(favoriteMovie)
             }.onSuccess {
-                Log.d(_TAG, "Movies onSuccess")
+                Log.d(_TAG, "Movie Save Favorite")
                 favorite()
             }.onFailure { exception ->
-                Log.e(_TAG, "Movies error: $exception")
+                Log.e(_TAG, "Movie Save Favorite  error: $exception")
             }
         }
 
 }
 
     fun favorite() {
-        Log.d(_TAG, "entro a favoritos")
         scope.launch {
             kotlin.runCatching {
                 favoriteRepo.getFavoriteMovies()
             }.onSuccess { movies ->
-                Log.d(_TAG, "Movies onSuccess")
+                Log.d(_TAG, "List Favorite")
                 val movieIds = movies.map { it.id }
                 val arrayList = ArrayList<Int>(movieIds)
                 ids.postValue(arrayList)
                 WLMovies.postValue(movies)
             }.onFailure { exception ->
-                Log.e(_TAG, "Movies error: $exception")
+                Log.e(_TAG, "List Favorite Error: $exception")
             }
         }
     }
@@ -105,15 +104,14 @@ class MainViewModel : ViewModel() {
     }
 
     fun favoriteDelete(id:Int) {
-        Log.d(_TAG, "entro a borrar favorito")
         scope.launch {
             kotlin.runCatching {
                 favoriteRepo.deleteFavoriteMovies(id.toString())
             }.onSuccess {
-                Log.d(_TAG, "Movies onSuccess")
+                Log.d(_TAG, "Movie Delete Favorite")
                 favorite()
             }.onFailure {
-                Log.e(_TAG, "Movies error: " + it)
+                Log.e(_TAG, "Movie Delete Favorite error: " + it)
             }
         }
     }
